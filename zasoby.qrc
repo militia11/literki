@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>auta/ferrari.jpg</file>
+        <file>auta/tlo.jpg</file>
+        <file>zas/a_trans.png</file>
+        <file>zas/aatlo2.jpg</file>
+        <file>zas/b_trans.png</file>
+        <file>zas/bal.png</file>
+        <file>zas/cat.ico</file>
+        <file>zas/i_trans.png</file>
+        <file>zas/k_trans.png</file>
+        <file>zas/kungpan.png</file>
+        <file>zas/monkey.png</file>
+        <file>zas/p_trans.png</file>
+        <file>zas/sm.png</file>
+        <file>zas/smmm.png</file>
+        <file>zas/st.png</file>
+        <file>zas/st2.png</file>
+        <file>zas/t_tr.png</file>
+        <file>zas/t.png</file>
+        <file>zas/u.png</file>
+        <file>zas/x_1.png</file>
+        <file>zas/x.jpg</file>
+        <file>zas/hipo.png</file>
+        <file>zas/hipobok.png</file>
+        <file>zas/bal2.png</file>
+        <file>zas/bal15.png</file>
+    </qresource>
+</RCC>
