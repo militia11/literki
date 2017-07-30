@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>auta/ferrari.jpg</file>
         <file>auta/tlo.jpg</file>
         <file>zas/a_trans.png</file>
-        <file>zas/aatlo2.jpg</file>
         <file>zas/b_trans.png</file>
         <file>zas/bal.png</file>
         <file>zas/cat.ico</file>
@@ -16,28 +14,17 @@
         <file>zas/smmm.png</file>
         <file>zas/st.png</file>
         <file>zas/st2.png</file>
-        <file>zas/t_tr.png</file>
         <file>zas/t.png</file>
-        <file>zas/u.png</file>
-        <file>zas/x_1.png</file>
-        <file>zas/x.jpg</file>
         <file>zas/hipo.png</file>
         <file>zas/hipobok.png</file>
         <file>zas/bal2.png</file>
         <file>zas/bal15.png</file>
-        <file>auta/audi_skalowacz_pl.jpg</file>
-        <file>auta/ford02.png</file>
-        <file>auta/ford03.png</file>
-        <file>auta/ford01.jpg</file>
-        <file>auta/ford04.jpeg</file>
         <file>zas/F.png</file>
         <file>zas/R.png</file>
         <file>zas/U.png</file>
         <file>zas/D.png</file>
         <file>zas/giphy.gif</file>
         <file>zas/EE.png</file>
-        <file>zas/E.png</file>
-        <file>zas/O.png</file>
         <file>zas/Oo.png</file>
         <file>auta/opel0.jpg</file>
         <file>auta/opel1.jpg</file>

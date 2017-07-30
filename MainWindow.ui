@@ -30,8 +30,8 @@ background: transparent};</string>
    <widget class="QPushButton" name="pushButtonStart">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>150</y>
+      <x>380</x>
+      <y>160</y>
       <width>551</width>
       <height>531</height>
      </rect>
@@ -125,16 +125,16 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>207</width>
-      <height>207</height>
+      <width>179</width>
+      <height>186</height>
      </size>
     </property>
    </widget>
    <widget class="QLabel" name="label1">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>220</y>
+      <x>340</x>
+      <y>120</y>
       <width>121</width>
       <height>111</height>
      </rect>
@@ -230,11 +230,11 @@ background: transparent;}</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label2">
+   <widget class="QLabel" name="label4">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>220</y>
+      <x>790</x>
+      <y>120</y>
       <width>121</width>
       <height>111</height>
      </rect>
@@ -255,8 +255,8 @@ background: transparent;}</string>
    <widget class="QLabel" name="label3">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>220</y>
+      <x>640</x>
+      <y>120</y>
       <width>121</width>
       <height>111</height>
      </rect>
@@ -274,11 +274,11 @@ background: transparent;}</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label4">
+   <widget class="QLabel" name="label2">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>220</y>
+      <x>490</x>
+      <y>120</y>
       <width>121</width>
       <height>111</height>
      </rect>
@@ -387,7 +387,7 @@ background: transparent;}</string>
     <property name="iconSize">
      <size>
       <width>140</width>
-      <height>124</height>
+      <height>100</height>
      </size>
     </property>
    </widget>
@@ -405,8 +405,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>228</width>
-      <height>224</height>
+      <width>196</width>
+      <height>195</height>
      </size>
     </property>
    </widget>
@@ -433,7 +433,7 @@ background: transparent;}</string>
     <property name="geometry">
      <rect>
       <x>900</x>
-      <y>540</y>
+      <y>570</y>
       <width>191</width>
       <height>181</height>
      </rect>
@@ -441,14 +441,10 @@ background: transparent;}</string>
     <property name="text">
      <string/>
     </property>
-    <property name="icon">
-     <iconset resource="zasoby.qrc">
-      <normaloff>:/zas/giphy.gif</normaloff>:/zas/giphy.gif</iconset>
-    </property>
     <property name="iconSize">
      <size>
-      <width>213</width>
-      <height>208</height>
+      <width>207</width>
+      <height>192</height>
      </size>
     </property>
    </widget>
@@ -523,8 +519,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>228</width>
-      <height>224</height>
+      <width>223</width>
+      <height>197</height>
      </size>
     </property>
    </widget>
@@ -542,7 +538,7 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>179</width>
+      <width>150</width>
       <height>207</height>
      </size>
     </property>
@@ -576,6 +572,28 @@ background: transparent;}</string>
     </property>
     <property name="wordWrap">
      <bool>false</bool>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::NoTextInteraction</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelPanda">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>180</y>
+      <width>911</width>
+      <height>641</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="zasoby.qrc">:/zas/kungpan.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
     <property name="textInteractionFlags">
      <set>Qt::NoTextInteraction</set>
@@ -620,6 +638,9 @@ background: transparent;}</string>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
+    <property name="textInteractionFlags">
+     <set>Qt::NoTextInteraction</set>
+    </property>
    </widget>
    <zorder>pushButtonStart</zorder>
    <zorder>pushButton</zorder>
@@ -631,9 +652,9 @@ background: transparent;}</string>
    <zorder>labelBal1</zorder>
    <zorder>labelBal2</zorder>
    <zorder>labelBal3</zorder>
-   <zorder>label2</zorder>
-   <zorder>label3</zorder>
    <zorder>label4</zorder>
+   <zorder>label3</zorder>
+   <zorder>label2</zorder>
    <zorder>pushButton14</zorder>
    <zorder>pushButton10</zorder>
    <zorder>pushButton11</zorder>
@@ -648,6 +669,7 @@ background: transparent;}</string>
    <zorder>pushButton2</zorder>
    <zorder>pushButton12</zorder>
    <zorder>label</zorder>
+   <zorder>labelPanda</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
