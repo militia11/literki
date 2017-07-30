@@ -25,5 +25,14 @@
         <file>zas/hipobok.png</file>
         <file>zas/bal2.png</file>
         <file>zas/bal15.png</file>
+        <file>auta/audi_skalowacz_pl.jpg</file>
+        <file>auta/ford02.png</file>
+        <file>auta/ford03.png</file>
+        <file>auta/ford01.jpg</file>
+        <file>auta/ford04.jpeg</file>
+        <file>zas/F.png</file>
+        <file>zas/R.png</file>
+        <file>zas/U.png</file>
+        <file>zas/D.png</file>
     </qresource>
 </RCC>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1903</width>
-    <height>925</height>
+    <width>1366</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,10 +30,10 @@ background: transparent};</string>
    <widget class="QPushButton" name="pushButtonStart">
     <property name="geometry">
      <rect>
-      <x>850</x>
-      <y>360</y>
+      <x>530</x>
+      <y>150</y>
       <width>551</width>
-      <height>561</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -47,15 +47,16 @@ border: none;
 margin: 0px;
 padding: 0px;
 border-color: #FFFFFF; }
-QPushButton:hover {background-image: url(:/zas/hipo.png);}</string>
+QPushButton:hover {background-image: url(:/zas/hipo.png);
+qproperty-iconSize:  12 px;}</string>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="iconSize">
      <size>
-      <width>600</width>
-      <height>600</height>
+      <width>100</width>
+      <height>100</height>
      </size>
     </property>
     <property name="shortcut">
@@ -77,8 +78,8 @@ QPushButton:hover {background-image: url(:/zas/hipo.png);}</string>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>890</y>
+      <x>30</x>
+      <y>200</y>
       <width>16</width>
       <height>30</height>
      </rect>
@@ -91,11 +92,71 @@ background: transparent;}</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="labelBal1">
+   <widget class="QPushButton" name="pushButton3">
     <property name="geometry">
      <rect>
-      <x>1550</x>
-      <y>60</y>
+      <x>30</x>
+      <y>480</y>
+      <width>201</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>213</width>
+      <height>208</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton1">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>530</y>
+      <width>201</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>207</width>
+      <height>207</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label1">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>220</y>
+      <width>121</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="labelBal1">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>10</y>
       <width>221</width>
       <height>291</height>
      </rect>
@@ -103,15 +164,25 @@ background: transparent;}</string>
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap resource="zasoby.qrc">:/zas/bal.png</pixmap>
+    <property name="icon">
+     <iconset resource="zasoby.qrc">
+      <normaloff>:/zas/bal.png</normaloff>:/zas/bal.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>200</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="labelBal3">
+   <widget class="QPushButton" name="labelBal2">
     <property name="geometry">
      <rect>
-      <x>1580</x>
-      <y>80</y>
+      <x>1130</x>
+      <y>0</y>
       <width>221</width>
       <height>291</height>
      </rect>
@@ -119,105 +190,425 @@ background: transparent;}</string>
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap resource="zasoby.qrc">:/zas/bal2.png</pixmap>
+    <property name="icon">
+     <iconset resource="zasoby.qrc">
+      <normaloff>:/zas/bal15.png</normaloff>:/zas/bal15.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>200</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QPushButton" name="labelBal3">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>20</y>
+      <width>221</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="zasoby.qrc">
+      <normaloff>:/zas/bal2.png</normaloff>:/zas/bal2.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>200</width>
+      <height>200</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label2">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>220</y>
+      <width>121</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label3">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>220</y>
+      <width>121</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label4">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>220</y>
+      <width>121</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton14">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>530</y>
+      <width>131</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>140</width>
+      <height>124</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton10">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>640</y>
+      <width>131</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>173</width>
+      <height>147</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton11">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>530</y>
+      <width>131</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>173</width>
+      <height>147</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton8">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>640</y>
+      <width>131</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>173</width>
+      <height>147</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton7">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>530</y>
+      <width>131</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>140</width>
+      <height>124</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton0">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>570</y>
+      <width>211</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>228</width>
+      <height>224</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton6">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>670</y>
+      <width>121</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>136</width>
+      <height>117</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton4">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>540</y>
+      <width>191</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>213</width>
+      <height>208</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton5">
+    <property name="geometry">
+     <rect>
+      <x>1220</x>
+      <y>600</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>163</width>
+      <height>208</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton9">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>660</y>
+      <width>131</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>140</width>
+      <height>124</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton13">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>350</y>
+      <width>131</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>173</width>
+      <height>147</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton2">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>87</y>
-      <width>1881</width>
-      <height>652</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelAuto">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>1060</width>
-         <height>650</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <property name="lineWidth">
-        <number>8</number>
-       </property>
-       <property name="midLineWidth">
-        <number>2</number>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="labelBal2">
-    <property name="geometry">
-     <rect>
-      <x>1560</x>
-      <y>50</y>
+      <y>150</y>
       <width>221</width>
-      <height>291</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap resource="zasoby.qrc">:/zas/bal15.png</pixmap>
+    <property name="iconSize">
+     <size>
+      <width>228</width>
+      <height>224</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton12">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>0</y>
+      <width>201</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>179</width>
+      <height>207</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelAuto">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>70</y>
+      <width>841</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>700</width>
+      <height>450</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>8</number>
+    </property>
+    <property name="midLineWidth">
+     <number>2</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <zorder>pushButtonStart</zorder>
    <zorder>pushButton</zorder>
-   <zorder>labelBal1</zorder>
-   <zorder>labelBal3</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>labelBal2</zorder>
    <zorder>horizontalSpacer</zorder>
+   <zorder>pushButton3</zorder>
+   <zorder>pushButton1</zorder>
+   <zorder>label1</zorder>
+   <zorder>labelBal1</zorder>
+   <zorder>labelBal2</zorder>
+   <zorder>labelBal3</zorder>
+   <zorder>label2</zorder>
+   <zorder>label3</zorder>
+   <zorder>label4</zorder>
+   <zorder>pushButton14</zorder>
+   <zorder>pushButton10</zorder>
+   <zorder>pushButton11</zorder>
+   <zorder>pushButton8</zorder>
+   <zorder>pushButton7</zorder>
+   <zorder>pushButton0</zorder>
+   <zorder>pushButton6</zorder>
+   <zorder>pushButton4</zorder>
+   <zorder>pushButton5</zorder>
+   <zorder>pushButton9</zorder>
+   <zorder>pushButton13</zorder>
+   <zorder>pushButton2</zorder>
+   <zorder>pushButton12</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
