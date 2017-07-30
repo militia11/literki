@@ -12,7 +12,7 @@ namespace Ui {
 class MainWindow;
 }
 enum tryb {
-	NONE = 0,
+	NONE = -1,
 	AUDI,
 	FORD,
 	FIAT,

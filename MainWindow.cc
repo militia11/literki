@@ -50,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	przyciski.append (ui->pushButton13);
 	przyciski.append (ui->pushButton14);
 
-	trybAudi ();
 	pobierzIdNastepnegoAuta ();
 }
 
@@ -61,8 +60,13 @@ void MainWindow::trybAudi() {
 	przyciski[wylosowaneLivzbyDoPrzyciskow[2]]->setIcon (ikony["D"]);
 	przyciski[wylosowaneLivzbyDoPrzyciskow[3]]->setIcon (ikony["I"]);
 
+	//	ui->pushButtonA->setIcon (ikony["A"]);
+//	ui->pushButtonA->setToolTip ("A");
 
-	//	ui->label->setText ("A");
+//	if (ui->pushButtonA->toolTip () == QString("A")) {
+//		exit(1);
+		//ui->pushButtonA->setToolTip ("");
+//	}
 }
 
 int MainWindow::pobierzIdNastepnegoAuta() {
@@ -78,16 +82,7 @@ void MainWindow::on_pushButtonStart_clicked() {
 	ui->pushButtonStart->hide ();
 	ui->labelAuto->show ();
 	wlaczBujanieBalonem();
-
 	ustawNastepneAuto ();
-
-	//	ui->pushButtonA->setIcon (ikony["A"]);
-//	ui->pushButtonA->setToolTip ("A");
-
-//	if (ui->pushButtonA->toolTip () == QString("A")) {
-//		exit(1);
-		//ui->pushButtonA->setToolTip ("");
-//	}
 }
 
 void MainWindow::on_labelBal3_clicked() {
@@ -108,9 +103,10 @@ void MainWindow::ustawNastepneAuto() {
 	int id = pobierzIdNastepnegoAuta ();
 	QString path = ":/auta/";
 	path+= slownikTrybow[aktualnyTryb];
+	qDebug() << aktualnyTryb << slownikTrybow[aktualnyTryb];
 	path+=QString::number(id);
 	path+=".jpg";
-	//ui->labelAuto->setPixmap(QPixmap(path));
+	ui->labelAuto->setPixmap(QPixmap(path));
 	qDebug() << path;
 }
 

@@ -35,5 +35,25 @@
         <file>zas/U.png</file>
         <file>zas/D.png</file>
         <file>zas/giphy.gif</file>
+        <file>zas/EE.png</file>
+        <file>zas/E.png</file>
+        <file>zas/O.png</file>
+        <file>zas/Oo.png</file>
+        <file>auta/opel0.jpg</file>
+        <file>auta/opel1.jpg</file>
+        <file>auta/opel3.jpg</file>
+        <file>auta/opel2.jpg</file>
+        <file>auta/audi0.jpg</file>
+        <file>auta/audi1.jpg</file>
+        <file>auta/audi2.jpg</file>
+        <file>auta/audi3.jpg</file>
+        <file>auta/fiat0.jpg</file>
+        <file>auta/fiat1.jpg</file>
+        <file>auta/fiat2.jpg</file>
+        <file>auta/fiat3.jpg</file>
+        <file>auta/ford0.jpg</file>
+        <file>auta/ford1.jpg</file>
+        <file>auta/ford2.jpg</file>
+        <file>auta/ford3.jpg</file>
     </qresource>
 </RCC>
