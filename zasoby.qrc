@@ -34,5 +34,6 @@
         <file>zas/R.png</file>
         <file>zas/U.png</file>
         <file>zas/D.png</file>
+        <file>zas/giphy.gif</file>
     </qresource>
 </RCC>

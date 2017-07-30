@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	srand(time(0));
 	aktualnyTryb = NONE;
+	QFont f( "Arial", 106, QFont::Bold);
+	ui->label->setStyleSheet("QLabel {color : red; }");
+	ui->label->setFont (f);
 	ui->labelAuto->setVisible(false);
 	ui->pushButton->setFocus ();
 	ui->labelBal1->setVisible(false);
@@ -26,6 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ikony["D"] = d;
 	ikony.insert ("I", i );
 
+	slownikTrybow[AUDI] = "audi";
+	slownikTrybow[FORD] = "ford";
+	slownikTrybow[FIAT] = "fiat";
+	slownikTrybow[OPEL] = "opel";
+
 	przyciski.append (ui->pushButton0);
 	przyciski.append (ui->pushButton1);
 	przyciski.append (ui->pushButton2);
@@ -42,32 +50,38 @@ MainWindow::MainWindow(QWidget *parent) :
 	przyciski.append (ui->pushButton13);
 	przyciski.append (ui->pushButton14);
 
-		motywAudi ();
+	trybAudi ();
+	pobierzIdNastepnegoAuta ();
 }
 
-void MainWindow::motywAudi() {
+void MainWindow::trybAudi() {
 	wylosuj4Liczby ();
+	przyciski[wylosowaneLivzbyDoPrzyciskow[0]]->setIcon (ikony["A"]);
+	przyciski[wylosowaneLivzbyDoPrzyciskow[1]]->setIcon (ikony["U"]);
+	przyciski[wylosowaneLivzbyDoPrzyciskow[2]]->setIcon (ikony["D"]);
+	przyciski[wylosowaneLivzbyDoPrzyciskow[3]]->setIcon (ikony["I"]);
 
-	przyciski[wylosowane[0]]->setIcon (ikony["A"]);
-	przyciski[wylosowane[1]]->setIcon (ikony["U"]);
-	przyciski[wylosowane[2]]->setIcon (ikony["D"]);
-	przyciski[wylosowane[3]]->setIcon (ikony["I"]);
 
+	//	ui->label->setText ("A");
+}
 
-	int *tab = wylosowane;
-	qDebug() << *tab;
-	qDebug() << *(tab+1);
-	qDebug() << *(tab+2);
-	qDebug() << *(tab+3);
+int MainWindow::pobierzIdNastepnegoAuta() {
+	int vtryb = 0;
+	do {
+		vtryb = wylosuj (4);
+	} while (vtryb == static_cast<int>(aktualnyTryb));
+	aktualnyTryb = static_cast<tryb>(vtryb);
+	return wylosuj (4);
 }
 
 void MainWindow::on_pushButtonStart_clicked() {
 	ui->pushButtonStart->hide ();
 	ui->labelAuto->show ();
 	wlaczBujanieBalonem();
-	QPixmap audi(":/auta/ford04.jpeg"); // ford 02 03 .png 01 jpg 04jpeg
-	ui->labelAuto->setPixmap(audi);
-//	ui->pushButtonA->setIcon (ikony["A"]);
+
+	ustawNastepneAuto ();
+
+	//	ui->pushButtonA->setIcon (ikony["A"]);
 //	ui->pushButtonA->setToolTip ("A");
 
 //	if (ui->pushButtonA->toolTip () == QString("A")) {
@@ -76,13 +90,7 @@ void MainWindow::on_pushButtonStart_clicked() {
 //	}
 }
 
-//	ui->pushButtonA->setVisible (false);
-//	pierwsza = ui->pushButtonA;
-//	QPixmap a(":/zas/a_trans.png");
-//	ui->label->setPixmap (a);
-
-void MainWindow::on_labelBal3_clicked()
-{
+void MainWindow::on_labelBal3_clicked() {
 	exit(1);
 }
 
@@ -94,6 +102,16 @@ void MainWindow::on_labelBal1_clicked()
 void MainWindow::on_labelBal2_clicked()
 {
 	exit(1);
+}
+
+void MainWindow::ustawNastepneAuto() {
+	int id = pobierzIdNastepnegoAuta ();
+	QString path = ":/auta/";
+	path+= slownikTrybow[aktualnyTryb];
+	path+=QString::number(id);
+	path+=".jpg";
+	//ui->labelAuto->setPixmap(QPixmap(path));
+	qDebug() << path;
 }
 
 void MainWindow::bujajBalonem() {
@@ -114,8 +132,7 @@ void MainWindow::wlaczBujanieBalonem() {
 	timerBalonowy->start(520);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
 	delete ui;
 }
 
@@ -141,17 +158,17 @@ bool MainWindow::czyBylaWylosowana( int iLiczba, int tab[], int ile ) {
 	return false;
 }
 
-int MainWindow::wylosuj() {
-	return( rand() % 15 );
+int MainWindow::wylosuj(int zIlu) {
+	return( rand() % zIlu );
 }
 
 void MainWindow::wylosuj4Liczby() {
 		int wylosowanych = 0;
 	do {
-		int liczba = wylosuj();
-		if( czyBylaWylosowana( liczba, wylosowane, wylosowanych ) == false )
+		int liczba = wylosuj(15);
+		if( czyBylaWylosowana( liczba, wylosowaneLivzbyDoPrzyciskow, wylosowanych ) == false )
 		{
-			wylosowane[ wylosowanych ] = liczba;
+			wylosowaneLivzbyDoPrzyciskow[ wylosowanych ] = liczba;
 			wylosowanych++;
 		}
 	} while( wylosowanych < 4);

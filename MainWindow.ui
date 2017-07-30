@@ -155,7 +155,7 @@ background: transparent;}</string>
    <widget class="QPushButton" name="labelBal1">
     <property name="geometry">
      <rect>
-      <x>1110</x>
+      <x>1100</x>
       <y>10</y>
       <width>221</width>
       <height>291</height>
@@ -181,7 +181,7 @@ background: transparent;}</string>
    <widget class="QPushButton" name="labelBal2">
     <property name="geometry">
      <rect>
-      <x>1130</x>
+      <x>1120</x>
       <y>0</y>
       <width>221</width>
       <height>291</height>
@@ -207,7 +207,7 @@ background: transparent;}</string>
    <widget class="QPushButton" name="labelBal3">
     <property name="geometry">
      <rect>
-      <x>1140</x>
+      <x>1130</x>
       <y>20</y>
       <width>221</width>
       <height>291</height>
@@ -311,7 +311,7 @@ background: transparent;}</string>
     <property name="iconSize">
      <size>
       <width>140</width>
-      <height>124</height>
+      <height>99</height>
      </size>
     </property>
    </widget>
@@ -349,7 +349,7 @@ background: transparent;}</string>
     <property name="iconSize">
      <size>
       <width>173</width>
-      <height>147</height>
+      <height>112</height>
      </size>
     </property>
    </widget>
@@ -367,7 +367,7 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>173</width>
+      <width>123</width>
       <height>147</height>
      </size>
     </property>
@@ -424,8 +424,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>136</width>
-      <height>117</height>
+      <width>102</width>
+      <height>107</height>
      </size>
     </property>
    </widget>
@@ -440,6 +440,10 @@ background: transparent;}</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="zasoby.qrc">
+      <normaloff>:/zas/giphy.gif</normaloff>:/zas/giphy.gif</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -462,7 +466,7 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>163</width>
+      <width>133</width>
       <height>208</height>
      </size>
     </property>
@@ -500,8 +504,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>173</width>
-      <height>147</height>
+      <width>129</width>
+      <height>113</height>
      </size>
     </property>
    </widget>
@@ -541,6 +545,40 @@ background: transparent;}</string>
       <width>179</width>
       <height>207</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>260</y>
+      <width>211</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>9</number>
+    </property>
+    <property name="midLineWidth">
+     <number>7</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::NoTextInteraction</set>
     </property>
    </widget>
    <widget class="QLabel" name="labelAuto">
@@ -609,6 +647,7 @@ background: transparent;}</string>
    <zorder>pushButton13</zorder>
    <zorder>pushButton2</zorder>
    <zorder>pushButton12</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

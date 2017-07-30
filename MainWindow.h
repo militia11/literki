@@ -5,17 +5,18 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QMap>
-//#include"time.h"
+#include <QHash>
 #include <cstdlib>           //rand()
 
 namespace Ui {
 class MainWindow;
 }
 enum tryb {
-	NONE,
+	NONE = 0,
 	AUDI,
 	FORD,
 	FIAT,
+	OPEL
 };
 
 class MainWindow : public QMainWindow{
@@ -34,19 +35,23 @@ class MainWindow : public QMainWindow{
 		void on_labelBal2_clicked();
 
 	private:
-		void motywAudi();
+		void ustawNastepneAuto();
+		void trybAudi();
 
-		QMap<QString, QIcon>ikony;
+		int pobierzIdNastepnegoAuta();
+		tryb aktualnyTryb;
+
+		QHash<tryb, QString> slownikTrybow;
+		QHash<QString, QIcon>ikony;
 		QList<QPushButton *> przyciski;
 
-		tryb aktualnyTryb;
 		QPushButton *wynikpierwsza;
 		QPushButton *wynikdruga;
 		QPushButton *wyniktrzecia;
 		QPushButton *wynikczwarta;
-int wylosowane[4];
+		int wylosowaneLivzbyDoPrzyciskow[4];
 		bool czyBylaWylosowana( int iLiczba, int tab[], int ile );
-		int wylosuj();
+		int wylosuj(int zIlu);
 		void wylosuj4Liczby();
 		void resizeEvent(QResizeEvent *evt);
 		void wlaczBujanieBalonem();
