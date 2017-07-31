@@ -7,6 +7,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += multimedia
 
 TARGET = Literki
 TEMPLATE = app
@@ -20,4 +21,6 @@ HEADERS  += MainWindow.h
 FORMS    += MainWindow.ui
 
 RESOURCES += \
-    zasoby.qrc
+    zasoby.qrc \
+    wave.qrc \
+    zasoby2.qrc

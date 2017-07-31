@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>wave/theme3.wav</file>
+        <file>wave/z2.wav</file>
+        <file>wave/z1.wav</file>
+        <file>wave/win2.wav</file>
+        <file>wave/z0.wav</file>
+        <file>wave/win1.wav</file>
+        <file>wave/win0.wav</file>
+    </qresource>
+</RCC>

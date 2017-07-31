@@ -8,6 +8,7 @@
 #include <QHash>
 #include <cstdlib>           //rand()
 #include <QLabel>
+#include <QSound>
 
 namespace Ui {
 class MainWindow;
@@ -39,12 +40,13 @@ class MainWindow : public QMainWindow{
 		void on_labelBal2_clicked();
 
 	private:
+		void inicjalizujIkonyLabely();
 		void ustawNastepneAuto();
 		void ustawLiteryWPrzyciskach();
 		int pobierzIdNastepnegoAuta();
 		tryb aktualnyTryb;
 
-		void ustawZdjecieLabVictory();
+		void ustawZdjecieVictoryLubBalonLeci();
 		int trafionychLiter;
 		QList<QString> literyMarki;
 		QList<QLabel *> labelyWAucie;
@@ -80,8 +82,8 @@ class MainWindow : public QMainWindow{
 		void pokazBalon2();
 		void pokazBalon3();
 		QTimer *timerBalonowy;
-		Ui::MainWindow *ui;
 		int ktoryBalon;
+		Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

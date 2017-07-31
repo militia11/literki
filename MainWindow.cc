@@ -9,24 +9,168 @@ MainWindow::MainWindow(QWidget *parent) :
 		trafionychLiter(0),
 		victoryTimcounter(0){
 	ui->setupUi(this);
+	QSound::play ("://wave/theme0.wav");
+
 	srand(time(0));
+	ui->pushButton->setFocus ();
 	aktualnyTryb = NONE;
-	QFont f( "Arial", 106, QFont::Bold);
+	QFont f( "Arial", 126, QFont::Bold);
 	ui->label->setStyleSheet("QLabel {color : red; }");
 	ui->label->setFont (f);
 	ui->label->setVisible (false);
 	ui->labelAuto->setVisible(false);
-	ui->pushButton->setFocus ();
 
 	ui->labelBal1->setVisible(false);
 	ui->labelBal2->setVisible(false);
 	ui->labelBal3->setVisible(false);
+
 	timerBalonowy = new QTimer(this);
 	connect(timerBalonowy, SIGNAL(timeout()), this, SLOT(bujajBalonem()));
-
 	timerVictory = new QTimer(this);
 	connect(timerVictory, SIGNAL(timeout()), this, SLOT(victory()));
 
+	inicjalizujIkonyLabely();
+}
+
+void MainWindow::uzupelnijPrzyciskiLiterami() {
+	for(int i=0; i<4;i++) {
+		qDebug() << i <<literyMarki.at (i);
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
+			setIcon(ikony[literyMarki.at (i)]);
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
+			setToolTip (literyMarki.at (i));
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
+	}
+	aktualizujAktywnaLitere();
+}
+
+void MainWindow::victory() {
+	foreach (QLabel *l, labelyWAucie) {
+		l->setVisible (!l->isVisible ());
+	}
+
+	ui->pushButtonStart->setVisible(!ui->pushButtonStart->isVisible ());
+	victoryTimcounter++;
+
+	if (victoryTimcounter == 5) {
+		timerVictory->stop ();
+		victoryTimcounter =0;
+		ui->labelAuto->setVisible (true);
+		ui->label->show ();
+		foreach (QLabel*l, labelyWAucie) {
+			l->setVisible (true);
+			l->clear ();
+		}
+		ui->pushButtonStart->hide ();
+		odkryjNaNowoPrzyciskiZPoszukiwanych();
+		ustawNastepneAuto ();
+	}
+}
+
+void MainWindow::sprawdzLitereNaPrzycisku() {
+	QPushButton *but =qobject_cast<QPushButton *>(QObject::sender());
+	if (but->toolTip () == ui->label->text ()) {
+		// TRAFIONY DZWIEK !!!!!!!!!!
+		przeniesLitereDoZdjAuta (but);
+		but->hide ();
+		trafionychLiter++;
+		if (trafionychLiter == 4) {
+			ui->labelAuto->hide ();
+			ustawZdjecieVictoryLubBalonLeci();
+			timerVictory->start(660);
+			trafionychLiter = 0;
+			ui->label->hide ();
+
+		} else {
+			aktualizujAktywnaLitere();
+		}
+	} else {
+		// NIETRAFIONY DZWIEK !!!!!!!!!!
+	}
+}
+
+void MainWindow::ustawZdjecieVictoryLubBalonLeci() {
+	int id = wylosuj(6);
+	QString path = ":/zas/";
+	path+=QString::number(id);
+	path+=".png";
+	ui->pushButtonStart->setIconSize (QSize(900, 900));
+	ui->pushButtonStart->setIcon(QIcon (path));
+}
+
+void MainWindow::przeniesLitereDoZdjAuta(QPushButton *but) {
+	labelyWAucie[trafionychLiter]->
+		setPixmap (ikony[but->toolTip ()].pixmap (QSize(132, 132)));
+}
+
+void MainWindow::ustawLiteryWPrzyciskach() {
+	wylosuj4Liczby ();
+	switch (aktualnyTryb) {
+		case AUDI:
+			wyswietlLiteryDlaAudi();
+			break;
+		case FIAT:
+			wyswietlLiteryDlaFiat ();
+			break;
+		case FORD:
+			wyswietlLiteryDlaFord ();
+			break;
+		case OPEL:
+			wyswietlLiteryDlaOpel ();
+			break;
+		case NONE:
+			break;
+	}
+}
+
+void MainWindow::aktualizujAktywnaLitere() {
+	QString letter = literyMarki.at (trafionychLiter);
+	ui->label->setText (letter);
+}
+
+int MainWindow::pobierzIdNastepnegoAuta() {
+	int vtryb = 0;
+	do {
+		vtryb = wylosuj (4);
+	} while (vtryb == static_cast<int>(aktualnyTryb));
+	aktualnyTryb = static_cast<tryb>(vtryb);
+
+	return wylosuj (4);
+}
+
+void MainWindow::odkryjNaNowoPrzyciskiZPoszukiwanych() {
+	for (int i=0; i<4;i++) {
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
+	}
+}
+
+void MainWindow::on_pushButtonStart_clicked() {
+	ui->pushButtonStart->hide ();
+	ui->labelAuto->show ();
+	ui->label->setVisible (true);
+
+	QSound::play ("://wave/zle1.wav");
+
+	wlaczBujanieBalonem();
+	ustawNastepneAuto ();
+	ui->pushButtonStart->setStyleSheet ("QPushButton{background: transparent;}");
+}
+
+void MainWindow::on_labelBal3_clicked() {
+	exit(1);
+}
+
+void MainWindow::on_labelBal1_clicked()
+{
+	exit(1);
+}
+
+void MainWindow::on_labelBal2_clicked()
+{
+	exit(1);
+}
+
+void MainWindow::inicjalizujIkonyLabely() {
 	labelyWAucie.append (ui->label1);
 	labelyWAucie.append (ui->label2);
 	labelyWAucie.append (ui->label3);
@@ -82,135 +226,6 @@ MainWindow::MainWindow(QWidget *parent) :
 			SIGNAL(clicked()),
 			SLOT(sprawdzLitereNaPrzycisku()));
 	}
-	pobierzIdNastepnegoAuta ();
-}
-
-void MainWindow::uzupelnijPrzyciskiLiterami() {
-	for(int i=0; i<4;i++) {
-		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
-			setIcon(ikony[literyMarki.at (i)]);
-		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
-			setToolTip (literyMarki.at (i));
-	}
-	aktualizujAktywnaLitere();
-}
-
-void MainWindow::victory() {
-	foreach (QLabel *l, labelyWAucie) {
-		l->setVisible (!l->isVisible ());
-	}
-
-	ui->labelPanda->setVisible(!ui->labelPanda->isVisible ());
-	victoryTimcounter++;
-
-	if (victoryTimcounter == 5) {
-		timerVictory->stop ();
-		victoryTimcounter =0;
-		ui->labelAuto->setVisible (true);
-		foreach (QLabel*l, labelyWAucie) {
-			l->setVisible (true);
-			l->clear ();
-		}
-		odkryjNaNowoPrzyciskiZPoszukiwanych();
-		ustawNastepneAuto ();
-	}
-}
-
-void MainWindow::ustawZdjecieLabVictory() {
-	int id = wylosuj(3);
-}
-
-void MainWindow::sprawdzLitereNaPrzycisku() {
-	QPushButton *but =qobject_cast<QPushButton *>(QObject::sender());
-	if (but->toolTip () == ui->label->text ()) {
-		// TRAFIONY DZWIEK !!!!!!!!!!
-		przeniesLitereDoZdjAuta (but);
-		but->hide ();
-		trafionychLiter++;
-		if (trafionychLiter == 4) {
-			ui->labelPanda->setVisible (true);
-			ui->labelAuto->hide ();
-			ustawZdjecieLabVictory();
-			timerVictory->start(660);
-			trafionychLiter = 0;
-			ui->label->hide ();
-
-		} else {
-			aktualizujAktywnaLitere();
-		}
-	} else {
-		// NIETRAFIONY DZWIEK !!!!!!!!!!
-	}
-}
-
-void MainWindow::przeniesLitereDoZdjAuta(QPushButton *but) {
-	labelyWAucie[trafionychLiter]->
-		setPixmap (ikony[but->toolTip ()].pixmap (QSize(132, 132)));
-}
-
-void MainWindow::ustawLiteryWPrzyciskach() {
-	wylosuj4Liczby ();
-	switch (aktualnyTryb) {
-	case AUDI:
-		wyswietlLiteryDlaAudi();
-		break;
-	case FIAT:
-		wyswietlLiteryDlaFiat ();
-		break;
-	case FORD:
-		wyswietlLiteryDlaFord ();
-		break;
-	case OPEL:
-		wyswietlLiteryDlaOpel ();
-		break;
-	default:
-		break;
-	}
-}
-
-void MainWindow::aktualizujAktywnaLitere() {
-	QString letter = literyMarki.at (trafionychLiter);
-	ui->label->setText (letter);
-}
-
-int MainWindow::pobierzIdNastepnegoAuta() {
-	int vtryb = 0;
-	do {
-		vtryb = wylosuj (4);
-	} while (vtryb == static_cast<int>(aktualnyTryb));
-	aktualnyTryb = static_cast<tryb>(vtryb);
-
-	return wylosuj (4);
-}
-
-
-
-void MainWindow::odkryjNaNowoPrzyciskiZPoszukiwanych() {
-	for(int i=0; i<4;i++) {
-		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
-	}
-}
-
-void MainWindow::on_pushButtonStart_clicked() {
-	ui->pushButtonStart->hide ();
-	ui->labelAuto->show ();
-	ui->label->setVisible (true);
-	wlaczBujanieBalonem();
-	ustawNastepneAuto ();
-}
-
-void MainWindow::on_labelBal3_clicked() {
-	exit(1);
-}
-
-void MainWindow::on_labelBal1_clicked()
-{
-	exit(1);
-}
-
-void MainWindow::on_labelBal2_clicked()
-{
-	exit(1);
 }
 
 void MainWindow::ustawNastepneAuto() {
@@ -288,7 +303,7 @@ void MainWindow::wyswietlLiteryDlaAudi() {
 	literyMarki.append ("A");
 	literyMarki.append ("U");
 	literyMarki.append ("D");
-	literyMarki.append ("I");
+	literyMarki.append ("I");qDebug() << literyMarki;
 	uzupelnijPrzyciskiLiterami ();
 }
 
@@ -297,7 +312,7 @@ void MainWindow::wyswietlLiteryDlaFiat() {
 	literyMarki.append ("F");
 	literyMarki.append ("I");
 	literyMarki.append ("A");
-	literyMarki.append ("T");
+	literyMarki.append ("T");qDebug() << literyMarki;
 	uzupelnijPrzyciskiLiterami ();
 }
 
@@ -306,7 +321,7 @@ void MainWindow::wyswietlLiteryDlaFord() {
 	literyMarki.append ("F");
 	literyMarki.append ("O");
 	literyMarki.append ("R");
-	literyMarki.append ("D");
+	literyMarki.append ("D");qDebug() << literyMarki;
 	uzupelnijPrzyciskiLiterami ();
 }
 
@@ -316,6 +331,7 @@ void MainWindow::wyswietlLiteryDlaOpel() {
 	literyMarki.append ("P");
 	literyMarki.append ("E");
 	literyMarki.append ("L");
+	qDebug() << literyMarki;
 	uzupelnijPrzyciskiLiterami ();
 }
 

@@ -2,18 +2,11 @@
     <qresource prefix="/">
         <file>auta/tlo.jpg</file>
         <file>zas/a_trans.png</file>
-        <file>zas/b_trans.png</file>
         <file>zas/bal.png</file>
         <file>zas/cat.ico</file>
         <file>zas/i_trans.png</file>
         <file>zas/k_trans.png</file>
-        <file>zas/kungpan.png</file>
-        <file>zas/monkey.png</file>
         <file>zas/p_trans.png</file>
-        <file>zas/sm.png</file>
-        <file>zas/smmm.png</file>
-        <file>zas/st.png</file>
-        <file>zas/st2.png</file>
         <file>zas/t.png</file>
         <file>zas/hipo.png</file>
         <file>zas/hipobok.png</file>
@@ -42,5 +35,15 @@
         <file>auta/ford1.jpg</file>
         <file>auta/ford2.jpg</file>
         <file>auta/ford3.jpg</file>
+        <file>zas/0.png</file>
+        <file>zas/1.png</file>
+        <file>zas/2.png</file>
+        <file>zas/3.png</file>
+        <file>zas/4.png</file>
+        <file>zas/5.png</file>
+        <file>wave/theme0.wav</file>
+        <file>wave/zle0.wav</file>
+        <file>wave/zle1.wav</file>
+        <file>wave/zle2.wav</file>
     </qresource>
 </RCC>
