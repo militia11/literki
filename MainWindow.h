@@ -46,6 +46,13 @@ class MainWindow : public QMainWindow{
 		int pobierzIdNastepnegoAuta();
 		tryb aktualnyTryb;
 
+		int kliknietoDobrze;
+		int kliknietoZle;
+		int kliknietoWin;
+
+		QList<QString>waveOk;
+		QList<QString>waveWrong;
+		QList<QString>waveWin;
 		void ustawZdjecieVictoryLubBalonLeci();
 		int trafionychLiter;
 		QList<QString> literyMarki;
