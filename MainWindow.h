@@ -33,6 +33,10 @@ class MainWindow : public QMainWindow{
 		void on_pushButtonStart_clicked();
 		void sprawdzLitereNaPrzycisku();
 
+		void ruchKota();
+		void ruchGornyLot();
+
+		void setButtonIcon(int a);
 		void checksound();
 		void victory();
 		void bujajBalonem();
@@ -42,25 +46,58 @@ class MainWindow : public QMainWindow{
 		void on_labelBal2_clicked();
 
 		void on_pushButton_2_clicked();
+		void on_pushButton_3_clicked();
+
+		void on_pushButton_4_clicked();
 
 	private:
-		int aktualnyTheme;
 		void inicjalizujIkonyLabely();
 		void ustawNastepneAuto();
 		void ustawLiteryWPrzyciskach();
 		int pobierzIdNastepnegoAuta();
+		void przywrocAuta();
+		void ActivateGame();
+
+		void odkryjNaNowoPrzyciskiZPoszukiwanych();
+		void uzupelnijPrzyciskiLiterami();
+		void przeniesLitereDoZdjAuta(QPushButton *but);
+		void aktualizujAktywnaLitere();
+
+		void RozszerzLabelAuto();
+		void ZmniejszLabelAuto();
+
+		void wyswietlLiteryDlaAudi();
+		void wyswietlLiteryDlaFiat();
+		void wyswietlLiteryDlaFord();
+		void wyswietlLiteryDlaOpel();
+
+		int wylosowaneLiczbyDoPrzyciskow[4];
+		bool czyBylaWylosowana( int iLiczba, int tab[], int ile );
+		int wylosuj(int zIlu);
+		void wylosuj4Liczby();
+
+		void resizeEvent(QResizeEvent *evt);
+
+		void wlaczBujanieBalonem();
+		void pokazBalon1();
+		void pokazBalon2();
+		void pokazBalon3();
+
+		Ui::MainWindow *ui;
+		int victoryTimcounter;
+		int ktoryBalon;
+		int trafionychLiter;
 		tryb aktualnyTryb;
-
 		int kliknietoDobrze;
-		int kliknietoZle;
 		int kliknietoWin;
-
+		int kliknietoZle;
+		int aktualnyTheme;
+		int idJakieVictory;
 		QStringList themes;
 		QList<QString>waveOk;
 		QList<QString>waveWrong;
 		QList<QString>waveWin;
 		void ustawZdjecieVictoryLubBalonLeci();
-		int trafionychLiter;
 		QList<QString> literyMarki;
 		QList<QLabel *> labelyWAucie;
 		QHash<tryb, QString> slownikTrybow;
@@ -72,32 +109,15 @@ class MainWindow : public QMainWindow{
 		QPushButton *wyniktrzecia;
 		QPushButton *wynikczwarta;
 
-		void odkryjNaNowoPrzyciskiZPoszukiwanych();
-		void uzupelnijPrzyciskiLiterami();
-		void przeniesLitereDoZdjAuta(QPushButton *but);
-		void aktualizujAktywnaLitere();
+		QMovie *movieL;
+		QMovie *movieVictory;
 
-		void wyswietlLiteryDlaAudi();
-		void wyswietlLiteryDlaFiat();
-		void wyswietlLiteryDlaFord();
-		void wyswietlLiteryDlaOpel();
-
-		int wylosowaneLiczbyDoPrzyciskow[4];
-		bool czyBylaWylosowana( int iLiczba, int tab[], int ile );
-		int wylosuj(int zIlu);
-		void wylosuj4Liczby();
-		int victoryTimcounter;
-		void resizeEvent(QResizeEvent *evt);
-		void wlaczBujanieBalonem();
-		void pokazBalon1();
-		void pokazBalon2();
-		void pokazBalon3();
-		QSoundEffect *ef;
+		QSoundEffect *muzykaGlowneTheme;
+		QTimer *timerKot;
+		QTimer *timerGornegoLotu;
 		QTimer *timerThemeSound;
 		QTimer *timerVictory;
 		QTimer *timerBalonowy;
-		Ui::MainWindow *ui;
-		int ktoryBalon;
 };
 
 #endif // MAINWINDOW_H

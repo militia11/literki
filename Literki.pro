@@ -24,4 +24,5 @@ RESOURCES += \
     zasoby.qrc \
     wave.qrc \
     zasoby2.qrc \
-    zas3.qrc
+    zas3.qrc \
+    zasoby3.qrc

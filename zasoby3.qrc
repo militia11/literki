@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>zas/babcia.gif</file>
+        <file>zas/bat.gif</file>
+        <file>zas/kacper.png</file>
+        <file>zas/kotka.gif</file>
+        <file>zas/kromki.gif</file>
+        <file>zas/helicopter.gif</file>
+        <file>zas/win.gif</file>
+    </qresource>
+</RCC>

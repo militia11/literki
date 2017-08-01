@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1366</width>
+    <width>1361</width>
     <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -30,10 +33,10 @@ background: transparent};</string>
    <widget class="QPushButton" name="pushButtonStart">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>160</y>
+      <x>120</x>
+      <y>100</y>
       <width>551</width>
-      <height>531</height>
+      <height>581</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -362,12 +365,9 @@ background: transparent;}</string>
       <height>131</height>
      </rect>
     </property>
-    <property name="text">
-     <string/>
-    </property>
     <property name="iconSize">
      <size>
-      <width>123</width>
+      <width>86</width>
       <height>147</height>
      </size>
     </property>
@@ -452,9 +452,9 @@ background: transparent;}</string>
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>490</y>
+      <y>530</y>
       <width>151</width>
-      <height>151</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="text">
@@ -462,8 +462,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>108</width>
-      <height>208</height>
+      <width>174</width>
+      <height>101</height>
      </size>
     </property>
    </widget>
@@ -481,8 +481,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>140</width>
-      <height>124</height>
+      <width>114</width>
+      <height>96</height>
      </size>
     </property>
    </widget>
@@ -539,7 +539,7 @@ background: transparent;}</string>
     <property name="iconSize">
      <size>
       <width>150</width>
-      <height>207</height>
+      <height>148</height>
      </size>
     </property>
    </widget>
@@ -646,6 +646,98 @@ background: transparent;}</string>
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>257</y>
+      <width>1001</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="layout_">
+     <item>
+      <widget class="QLabel" name="cat">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="zasoby.qrc">:/zas/cat.ico</pixmap>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>559</x>
+      <y>17</y>
+      <width>661</width>
+      <height>258</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="layout">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="zasoby.qrc">:/zas/bal.png</pixmap>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>530</y>
+      <width>191</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>0</y>
+      <width>361</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>640</y>
+      <width>95</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
    <zorder>labelAuto</zorder>
    <zorder>pushButtonStart</zorder>
    <zorder>pushButton</zorder>
@@ -673,12 +765,17 @@ background: transparent;}</string>
    <zorder>pushButton12</zorder>
    <zorder>label</zorder>
    <zorder>pushButton_2</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
+   <zorder>horizontalLayoutWidget_2</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>l</zorder>
+   <zorder>pushButton_4</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="zasoby.qrc"/>
   <include location="zas3.qrc"/>
+  <include location="zasoby.qrc"/>
  </resources>
  <connections/>
 </ui>
