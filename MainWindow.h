@@ -9,6 +9,7 @@
 #include <cstdlib>           //rand()
 #include <QLabel>
 #include <QSound>
+#include <QSoundEffect>
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,7 @@ class MainWindow : public QMainWindow{
 		void on_pushButtonStart_clicked();
 		void sprawdzLitereNaPrzycisku();
 
+		void checksound();
 		void victory();
 		void bujajBalonem();
 
@@ -39,7 +41,10 @@ class MainWindow : public QMainWindow{
 		void on_labelBal1_clicked();
 		void on_labelBal2_clicked();
 
+		void on_pushButton_2_clicked();
+
 	private:
+		int aktualnyTheme;
 		void inicjalizujIkonyLabely();
 		void ustawNastepneAuto();
 		void ustawLiteryWPrzyciskach();
@@ -50,6 +55,7 @@ class MainWindow : public QMainWindow{
 		int kliknietoZle;
 		int kliknietoWin;
 
+		QStringList themes;
 		QList<QString>waveOk;
 		QList<QString>waveWrong;
 		QList<QString>waveWin;
@@ -76,8 +82,6 @@ class MainWindow : public QMainWindow{
 		void wyswietlLiteryDlaFord();
 		void wyswietlLiteryDlaOpel();
 
-		QTimer *timerVictory;
-
 		int wylosowaneLiczbyDoPrzyciskow[4];
 		bool czyBylaWylosowana( int iLiczba, int tab[], int ile );
 		int wylosuj(int zIlu);
@@ -88,9 +92,12 @@ class MainWindow : public QMainWindow{
 		void pokazBalon1();
 		void pokazBalon2();
 		void pokazBalon3();
+		QSoundEffect *ef;
+		QTimer *timerThemeSound;
+		QTimer *timerVictory;
 		QTimer *timerBalonowy;
-		int ktoryBalon;
 		Ui::MainWindow *ui;
+		int ktoryBalon;
 };
 
 #endif // MAINWINDOW_H

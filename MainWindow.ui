@@ -30,10 +30,10 @@ background: transparent};</string>
    <widget class="QPushButton" name="pushButtonStart">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>330</x>
       <y>160</y>
-      <width>541</width>
-      <height>501</height>
+      <width>551</width>
+      <height>531</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -106,8 +106,8 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>213</width>
-      <height>208</height>
+      <width>188</width>
+      <height>196</height>
      </size>
     </property>
    </widget>
@@ -444,7 +444,7 @@ background: transparent;}</string>
     <property name="iconSize">
      <size>
       <width>207</width>
-      <height>192</height>
+      <height>175</height>
      </size>
     </property>
    </widget>
@@ -452,7 +452,7 @@ background: transparent;}</string>
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>600</y>
+      <y>490</y>
       <width>151</width>
       <height>151</height>
      </rect>
@@ -462,7 +462,7 @@ background: transparent;}</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>133</width>
+      <width>108</width>
       <height>208</height>
      </size>
     </property>
@@ -620,6 +620,32 @@ background: transparent;}</string>
      <set>Qt::NoTextInteraction</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>680</y>
+      <width>101</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="zas3.qrc">
+      <normaloff>:/zas/happy music.png</normaloff>:/zas/happy music.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>159</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>labelAuto</zorder>
    <zorder>pushButtonStart</zorder>
    <zorder>pushButton</zorder>
@@ -646,11 +672,13 @@ background: transparent;}</string>
    <zorder>pushButton2</zorder>
    <zorder>pushButton12</zorder>
    <zorder>label</zorder>
+   <zorder>pushButton_2</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="zasoby.qrc"/>
+  <include location="zas3.qrc"/>
  </resources>
  <connections/>
 </ui>

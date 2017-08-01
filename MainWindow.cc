@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QDebug>
+#include <ctime>
 
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent),
@@ -10,9 +11,18 @@ MainWindow::MainWindow(QWidget *parent) :
 		victoryTimcounter(0),
 		kliknietoDobrze(0),
 		kliknietoWin(0),
-		kliknietoZle(0){
+		kliknietoZle(0),
+		aktualnyTheme(1){
+	themes.append ("://wave/theme0.wav");
+	ef =  new QSoundEffect();
+	ef->setSource (QUrl::fromLocalFile (themes[0]));
 	ui->setupUi(this);
-	QSound::play ("://wave/theme0.wav");
+	ef->play ();
+	themes.append ("://wave/theme1.wav");
+	themes.append ("://wave/theme2.wav");
+	timerThemeSound= new QTimer(this);
+	connect(timerThemeSound, SIGNAL(timeout()), this, SLOT(checksound()));
+	timerThemeSound->start (1000);
 	waveOk.append ("://wave/z0.wav");
 	waveOk.append ("://wave/z1.wav");
 	waveOk.append ("://wave/z2.wav");
@@ -41,8 +51,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	timerVictory = new QTimer(this);
 	connect(timerVictory, SIGNAL(timeout()), this, SLOT(victory()));
 
+
 	inicjalizujIkonyLabely();
 }
+
 
 void MainWindow::uzupelnijPrzyciskiLiterami() {
 	for(int i=0; i<4;i++) {
@@ -115,13 +127,24 @@ void MainWindow::sprawdzLitereNaPrzycisku() {
 	}
 }
 
+void MainWindow::checksound() {
+	if(!ef->isPlaying ()) {
+		ef->setSource (QUrl::fromLocalFile (themes[aktualnyTheme]));
+		ef->play ();
+		aktualnyTheme++;
+		if  (aktualnyTheme==3) {
+			aktualnyTheme=0;
+		}
+	}
+}
+
 void MainWindow::ustawZdjecieVictoryLubBalonLeci() {
 	int id = wylosuj(6);
 	QString path = ":/zas/";
 	path+=QString::number(id);
 	path+=".png";
-	ui->pushButtonStart->setIconSize (QSize(900, 900));
 	ui->pushButtonStart->setIcon(QIcon (path));
+	ui->pushButtonStart->setIconSize (QSize(800, 800));
 }
 
 void MainWindow::przeniesLitereDoZdjAuta(QPushButton *but) {
@@ -175,7 +198,7 @@ void MainWindow::on_pushButtonStart_clicked() {
 	ui->labelAuto->show ();
 	ui->label->setVisible (true);
 
-	QSound::play ("://wave/zle1.wav");
+//	QSound::play ("://wave/zle1.wav");
 
 	wlaczBujanieBalonem();
 	ustawNastepneAuto ();
@@ -283,8 +306,13 @@ void MainWindow::wlaczBujanieBalonem() {
 }
 
 MainWindow::~MainWindow() {
+	delete ef;
+	delete timerThemeSound;
+	delete timerVictory;
+	delete timerBalonowy;
 	delete ui;
 }
+
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
 	QPixmap bkgnd(":/auta/tlo.jpg");
@@ -379,4 +407,14 @@ void MainWindow::pokazBalon3() {
 	ui->labelBal2->setVisible(false);
 	ui->labelBal3->setVisible(true);
 	ktoryBalon = 0;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+	ef->setSource (QUrl::fromLocalFile (themes[aktualnyTheme]));
+	ef->play ();
+	aktualnyTheme++;
+	if  (aktualnyTheme==3) {
+		aktualnyTheme=0;
+	}
 }

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>zas/happy music.png</file>
+    </qresource>
+</RCC>
