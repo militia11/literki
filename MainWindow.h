@@ -35,6 +35,8 @@ class MainWindow : public QMainWindow{
 
 		void ruchKota();
 		void ruchGornyLot();
+		void przyblizenieKacpra();
+		void koniecfajerwerka();
 
 		void setButtonIcon(int a);
 		void checksound();
@@ -51,13 +53,14 @@ class MainWindow : public QMainWindow{
 		void on_pushButton_4_clicked();
 
 	private:
+		void visibleBaloonAndFrameLetter(bool visible);
 		void inicjalizujIkonyLabely();
 		void ustawNastepneAuto();
 		void ustawLiteryWPrzyciskach();
 		int pobierzIdNastepnegoAuta();
 		void przywrocAuta();
 		void ActivateGame();
-
+		void Fajerwerki();
 		void odkryjNaNowoPrzyciskiZPoszukiwanych();
 		void uzupelnijPrzyciskiLiterami();
 		void przeniesLitereDoZdjAuta(QPushButton *but);
@@ -76,6 +79,7 @@ class MainWindow : public QMainWindow{
 		int wylosuj(int zIlu);
 		void wylosuj4Liczby();
 
+
 		void resizeEvent(QResizeEvent *evt);
 
 		void wlaczBujanieBalonem();
@@ -92,7 +96,9 @@ class MainWindow : public QMainWindow{
 		int kliknietoWin;
 		int kliknietoZle;
 		int aktualnyTheme;
-		int idJakieVictory;
+		int licznikWygranych;
+		int przybKacper;
+		int licznikKacprowy;
 		QStringList themes;
 		QList<QString>waveOk;
 		QList<QString>waveWrong;
@@ -118,6 +124,7 @@ class MainWindow : public QMainWindow{
 		QTimer *timerThemeSound;
 		QTimer *timerVictory;
 		QTimer *timerBalonowy;
+		QTimer *timerKacprowy;
 };
 
 #endif // MAINWINDOW_H
