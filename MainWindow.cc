@@ -35,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	waveWin.append ("://wave/win0.wav");
 	waveWin.append ("://wave/win1.wav");
 	waveWin.append ("://wave/win2.wav");
-	ui->labelWin->setAlignment (Qt::AlignCenter);
 	aktualnyTryb = NONE;
 
 	ui->layout_->addStretch (70);
@@ -101,6 +100,7 @@ void MainWindow::uzupelnijPrzyciskiLiterami() {
 }
 
 void MainWindow::ustawZdjecieVictoryLubBalonLeci() {
+	visibleBaloonAndFrameLetter (false);
 	qDebug() <<licznikWygranych;
 	licznikWygranych++;
 	if(licznikWygranych==8){
@@ -119,7 +119,7 @@ void MainWindow::victory() {
 		l->setVisible (!l->isVisible ());
 	}
 	timerBalonowy->stop ();
-	visibleBaloonAndFrameLetter (false);
+	ui->labelBal3->hide ();
 	ui->labelWin->setVisible(!ui->labelWin->isVisible ());
 	victoryTimcounter++;
 	if (victoryTimcounter == 6) {
@@ -566,6 +566,11 @@ void MainWindow::visibleBaloonAndFrameLetter(bool visible) {
 	ui->labelBal2->setVisible (visible);
 	ui->labelBal3->setVisible (visible);
 	ui->label->setVisible (visible);
+	ui->pushButton_2->setVisible (visible);
+	foreach (QPushButton*b, przyciski) {
+		b->setVisible (visible);
+
+	}
 }
 
 void MainWindow::RozszerzLabelAuto() {
