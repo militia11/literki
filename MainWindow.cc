@@ -4,9 +4,24 @@
 #include <ctime>
 #include <QMovie>
 #include <QThread>
+#include <QKeyEvent>
+#include <QMessageBox>
+
+//#include "windows.h"
+
+//DEVMODE *dm=new DEVMODE();
+//EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,dm);
+//dm->dmPelsWidth=(unsigned long)800;
+//dm->dmPelsHeight=(unsigned long)600;
+//ChangeDisplaySettings(dm,CDS_FULLSCREEN);
+
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent),
 		ui(new Ui::MainWindow),
+		butL(0),
+		winMonkeyNeeded(false),
+		terazKot(true),
+		czybylKacper(false),
 		victoryTimcounter(0),
 		ktoryBalon(0),
 		trafionychLiter(0),
@@ -16,14 +31,42 @@ MainWindow::MainWindow(QWidget *parent) :
 		aktualnyTheme(1),
 		licznikWygranych(0),
 		przybKacper(0),
-		licznikKacprowy(0){
+		licznikKacprowy(0) {
 	themes.append ("://wave/theme0.wav");
 	themes.append ("://wave/theme1.wav");
 	themes.append ("://wave/theme2.wav");
+	themes.append ("://wave/theme3.wav");
 	muzykaGlowneTheme =  new QSoundEffect();
 	muzykaGlowneTheme->setSource (QUrl::fromLocalFile (themes[0]));
-//	muzykaGlowneTheme->play ();
+	muzykaGlowneTheme->play ();
 	ui->setupUi(this);
+
+	labelBal1= new QPushButton(this);
+	labelBal1->setIcon (QIcon("://zas/bal.png"));
+	labelBal1->setGeometry (1100, 10,221,291);
+
+	labelBal2= new QPushButton(this);
+	labelBal2->setIcon (QIcon("://zas/bal15.png"));
+	labelBal2->setGeometry (1100, -10,221,291);
+
+	labelBal3= new QPushButton(this);
+	labelBal3->setIcon (QIcon("://zas/bal2.png"));
+	labelBal3->setGeometry (1120, 10,221,291);
+
+	connect (labelBal1, SIGNAL(clicked(bool)), this, SLOT(yy()));
+	connect (labelBal2, SIGNAL(clicked(bool)), this, SLOT(yy()));
+	connect (labelBal3, SIGNAL(clicked(bool)), this, SLOT(yy()));
+	labelBal1->setIconSize (QSize(200,200));
+	labelBal2->setIconSize (QSize(200,200));
+	labelBal3->setIconSize (QSize(200,200));
+	movieVictory = new QMovie();
+	movieVictory->setFileName ("://zas/win.gif");
+	movieVictory->start ();
+	ui->pushButtonStart->hide ();
+	ui->pushButtonStart->hide ();
+	ui->as->setGeometry (0, 0 , 1361, 768);
+	ui->as->setMovie(movieVictory);
+	ui->as->show ();
 	ui->labelWin->hide ();
 	srand(time(0));
 	waveOk.append ("://wave/z0.wav");
@@ -36,32 +79,31 @@ MainWindow::MainWindow(QWidget *parent) :
 	waveWin.append ("://wave/win1.wav");
 	waveWin.append ("://wave/win2.wav");
 	aktualnyTryb = NONE;
+	aktualnyPodpowiadacz = BALOON;
+
 
 	ui->layout_->addStretch (70);
 	ui->layout->addStretch (100);
 
 	ui->pushButton_2->setVisible (false);
-	ui->pushButton->setFocus ();
 
 	QFont f( "Arial", 126, QFont::Bold);
 	ui->label->setStyleSheet("QLabel {color : red; }");
 	ui->label->setFont (f);
 	ui->label->setVisible (false);
-
-	ui->labelAuto->setVisible(false);
-
 	// balon:
 	ui->label_2->hide ();
-	ui->labelBal1->setVisible(false);
-	ui->labelBal2->setVisible(false);
-	ui->labelBal3->setVisible(false);
+	labelBal1->setVisible(false);
+	labelBal2->setVisible(false);
+	labelBal3->setVisible(false);
 
 	// timery:
 	timerKacprowy = new QTimer(this);
 	connect(timerKacprowy,SIGNAL(timeout()),SLOT(przyblizenieKacpra()));
 
-	timerKot = new QTimer(this);
-	connect(timerKot,SIGNAL(timeout()),SLOT(ruchKota()));
+	timerDolnyRuch = new QTimer(this);
+	connect(timerDolnyRuch,SIGNAL(timeout()),SLOT(ruchDolny()));
+
 	timerGornegoLotu = new QTimer(this);
 	connect(timerGornegoLotu,SIGNAL(timeout()),SLOT(ruchGornyLot()));
 
@@ -76,80 +118,103 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(timerVictory, SIGNAL(timeout()), this, SLOT(victory()));
 
 	// gify
-	movieVictory = new QMovie();
 	movieL = new QMovie(":/zas/giphy.gif");
-//	connect(movie,SIGNAL(frameChanged(int)),this,SLOT(setButtonIcon(int)));
+	connect(movieL,SIGNAL(frameChanged(int)),this,SLOT(setButtonIcon(int)));
+	movieL->start ();
+
 	inicjalizujIkonyLabely();
+	movieBat = new QMovie("://zas/bat.gif");
+	connect(movieBat,SIGNAL(frameChanged(int)),this,SLOT(batWprzyciskachMovie(int)));
+	movieBatDuzo = new QMovie("://zas/batDuzo.gif");
+	movieHeli = new QMovie("://zas/helicopter.gif");
+	connect(movieHeli,SIGNAL(frameChanged(int)),this,SLOT(heliWprzyciskachMovie(int)));
+	movieVictory2 = new QMovie("://zas/kotka.gif");
+	ui->labelAuto->setPixmap (QPixmap("://zas/end.jpg"));
+	RozszerzLabelAuto ();
+	ui->pushButtonStart->hide ();
+	QTimer::singleShot (4500, this, SLOT(koniecZolwia()) );
+}
 
-	//ui->labelBabcia->hide ();
-
-	// przejsciowe !!!!!!!!!!!!!!!!!!!
-//	ui->pushButtonStart->hide ();
-//	ActivateGame ();
+void MainWindow::koniecZolwia() {
+	ui->pushButtonStart->show ();
+	ui->labelAuto->setVisible(false);
+	movieVictory->stop ();
+	ui->as->setGeometry (0, 0 , 1, 1);
+	ZmniejszLabelAuto ();
 }
 
 void MainWindow::uzupelnijPrzyciskiLiterami() {
 	for(int i=0; i<4;i++) {
-			przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
-				setIcon(ikony[literyMarki.at (i)]);
-			przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
-				setToolTip (literyMarki.at (i));
-			przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
+		setToolTip (literyMarki.at (i));
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
+		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->
+			setIcon(ikony[literyMarki.at (i)]);
+
+		if(przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->toolTip () == "L") {
+			butL = przyciski[wylosowaneLiczbyDoPrzyciskow[i]];
+		}
 	}
 	aktualizujAktywnaLitere();
 }
 
-void MainWindow::ustawZdjecieVictoryLubBalonLeci() {
-	visibleBaloonAndFrameLetter (false);
-	qDebug() <<licznikWygranych;
-	licznikWygranych++;
-	if(licznikWygranych==8){
-		//balon
-	} else if(licznikWygranych==12) {
-		//nietoperz
+void MainWindow::ustawZdjecieVictoryLubBalonLeci(bool zLotow, bool play) {
+	visibleFrameLetterButtonsLetter (false);
+	if(licznikWygranych == 2 && !zLotow){
+		timerDolnyRuch->start (60);
+	} else if(licznikWygranych==3 && !zLotow) {
+		timerDolnyRuch->start (70);
 	} else {
+		if(play) {
+			QSound::play (waveWin[kliknietoWin]);
+			kliknietoWin++;
+			if(kliknietoWin == 3) {
+				kliknietoWin = 0;
+			}
+		}
+		visibilityBallonButtons (false);
 		RozszerzLabelAuto ();
 		ui->labelAuto->show ();
+		ui->label_2->hide ();
 		timerVictory->start(800);
 	}
+
+	if(!zLotow) licznikWygranych++;
 }
 
 void MainWindow::victory() {
+	timerBalonowy->stop ();
+	visibilityBallonButtons (false);
 	foreach (QLabel *l, labelyWAucie) {
 		l->setVisible (!l->isVisible ());
 	}
-	timerBalonowy->stop ();
-	ui->labelBal3->hide ();
+	if(winMonkeyNeeded) {
+		ui->labelWin->setPixmap (QPixmap("://zas/3.png"));
+	} else {
+		ui->labelWin->setPixmap (QPixmap("://zas/0.png"));
+	}
+
 	ui->labelWin->setVisible(!ui->labelWin->isVisible ());
 	victoryTimcounter++;
 	if (victoryTimcounter == 6) {
+		if(winMonkeyNeeded) {
+			winMonkeyNeeded = false;
+		} else {
+			winMonkeyNeeded = true;
+		}
 		przywrocAuta();
-		ui->labelWin->hide ();
 	}
-
-//	if(licznikWygranych==6) {
-//		timerGornegoLotu->start (75);
-//		victoryTimcounter++;
-//		if (victoryTimcounter == 4) {
-//			przywrocAuta();
-//			return;
-//		}
-//	}
 }
 
 void MainWindow::przywrocAuta() {
-	timerBalonowy->start();
-	timerVictory->stop ();
-	ZmniejszLabelAuto ();
-	victoryTimcounter =0;
-	ui->labelAuto->setVisible (true);
-	visibleBaloonAndFrameLetter (true);
-	foreach (QLabel*l, labelyWAucie) {
-		l->setVisible (true);
-		l->clear ();
-	}
-	odkryjNaNowoPrzyciskiZPoszukiwanych();
-	ustawNastepneAuto ();
+	movieVictory->setFileName ("://zas/aa.gif");
+	movieVictory->start ();
+	RozszerzLabelAuto ();
+	ui->pushButtonStart->hide ();
+	ui->as->setGeometry (0, 0 , 1361, 768);
+	ui->as->setMovie(movieVictory);
+	ui->as->show ();
+	QTimer::singleShot (1700, this, SLOT(koniecEfektuZamazywaniaEkranu()));
 }
 
 void MainWindow::sprawdzLitereNaPrzycisku() {
@@ -161,13 +226,11 @@ void MainWindow::sprawdzLitereNaPrzycisku() {
 		trafionychLiter++;
 
 		if (trafionychLiter == 4) {
-			QSound::play (waveWin[kliknietoWin]);
-			kliknietoWin++;
-			if(kliknietoWin == 3) {
-				kliknietoWin = 0;
-			}
+			timerBalonowy->stop ();
+			visibilityBallonButtons (false);
+
 			ui->labelAuto->hide ();
-			ustawZdjecieVictoryLubBalonLeci();
+			ustawZdjecieVictoryLubBalonLeci(false, true);
 			trafionychLiter = 0;
 		} else {
 			QSound::play (waveOk[kliknietoDobrze]);
@@ -192,7 +255,7 @@ void MainWindow::checksound() {
 		muzykaGlowneTheme->setSource (QUrl::fromLocalFile (themes[aktualnyTheme]));
 		muzykaGlowneTheme->play ();
 		aktualnyTheme++;
-		if  (aktualnyTheme==3) {
+		if  (aktualnyTheme==4) {
 			aktualnyTheme=0;
 		}
 	}
@@ -201,6 +264,11 @@ void MainWindow::checksound() {
 void MainWindow::przeniesLitereDoZdjAuta(QPushButton *but) {
 	labelyWAucie[trafionychLiter]->
 		setPixmap (ikony[but->toolTip ()].pixmap (QSize(132, 132)));
+	if(but->toolTip () == "L") {
+		but->setIcon (QIcon());
+		but->setToolTip ("");
+		butL = 0;
+	}
 }
 
 void MainWindow::ustawLiteryWPrzyciskach() {
@@ -237,25 +305,10 @@ int MainWindow::pobierzIdNastepnegoAuta() {
 	return wylosuj (4);
 }
 
-
 void MainWindow::odkryjNaNowoPrzyciskiZPoszukiwanych() {
 	for (int i=0; i<4;i++) {
 		przyciski[wylosowaneLiczbyDoPrzyciskow[i]]->setVisible (true);
 	}
-}
-
-void MainWindow::on_labelBal3_clicked() {
-	exit(1);
-}
-
-void MainWindow::on_labelBal1_clicked()
-{
-	exit(1);
-}
-
-void MainWindow::on_labelBal2_clicked()
-{
-	exit(1);
 }
 
 void MainWindow::inicjalizujIkonyLabely() {
@@ -340,17 +393,52 @@ void MainWindow::bujajBalonem() {
 	}
 }
 
+void MainWindow::koniecBatD() {
+	ustawZdjecieVictoryLubBalonLeci(true, false);
+	visibleFrameLetterButtonsLetter(false);
+	QSound::play (waveWin[kliknietoWin]);
+	kliknietoWin++;
+	if(kliknietoWin == 3) {
+		kliknietoWin = 0;
+	}
+	trafionychLiter = 0;
+	timerGornegoLotu->stop();
+	movieVictory->stop ();
+	ui->label_2->hide ();
+	ui->layout->setStretch (0,0);
+	ui->layout->setStretch (1,70);
+	aktualnyPodpowiadacz = HELI;
+	labelBal1->setIconSize (QSize(400, 400));
+	labelBal3->setIconSize (QSize(400, 400));
+	labelBal2->setIconSize (QSize(400, 400));
+	movieBat->stop ();
+	czyscLitereL ();
+	ui->label_2->setMovie (movieHeli);
+	movieHeli->start ();
+	movieBatDuzo->stop ();
+	ui->as->setGeometry (0,0, 1,1);
+	ui->as->hide ();
+}
+
 void MainWindow::setButtonIcon(int a) {
-	//przyciski[wylosowaneLiczbyDoPrzyciskow[yy]]->setIcon(QIcon(movie->currentPixmap()));
+	Q_UNUSED(a);
+	if(butL != 0) {
+		butL->setIcon(QIcon(movieL->currentPixmap()));
+	}
 }
 
 void MainWindow::wlaczBujanieBalonem() {
+	if(!finall){
 	timerBalonowy->start(520);
+	}
 }
 
 MainWindow::~MainWindow() {
+	delete labelBal1;
+	delete labelBal2;
+	delete labelBal3;
 	delete muzykaGlowneTheme;
-	delete timerKot;
+	delete timerDolnyRuch;
 	delete timerGornegoLotu;
 	delete movieL;
 	delete movieVictory;
@@ -360,6 +448,23 @@ MainWindow::~MainWindow() {
 	delete ui;
 }
 
+void MainWindow::final() {
+	movieVictory2->stop ();
+}
+
+void MainWindow::batWprzyciskachMovie(int x) {
+	Q_UNUSED(x);
+	labelBal1->setIcon(QIcon(movieBat->currentPixmap()));
+	labelBal2->setIcon(QIcon(movieBat->currentPixmap()));
+	labelBal3->setIcon(QIcon(movieBat->currentPixmap()));
+}
+
+void MainWindow::heliWprzyciskachMovie(int x) {
+	Q_UNUSED(x);
+	labelBal1->setIcon(QIcon(movieHeli->currentPixmap()));
+	labelBal2->setIcon(QIcon(movieHeli->currentPixmap()));
+	labelBal3->setIcon(QIcon(movieHeli->currentPixmap()));
+}
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
 	QPixmap bkgnd(":/auta/tlo.jpg");
@@ -436,34 +541,40 @@ void MainWindow::wyswietlLiteryDlaOpel() {
 }
 
 void MainWindow::pokazBalon1() {
-	ui->labelBal1->setVisible(true);
-	ui->labelBal2->setVisible(false);
-	ui->labelBal3->setVisible(false);
+	labelBal1->setVisible(true);
+	labelBal2->setVisible(false);
+	labelBal3->setVisible(false);
 	ktoryBalon = 1;
 }
 
 void MainWindow::pokazBalon2() {
-	ui->labelBal1->setVisible(false);
-	ui->labelBal2->setVisible(true);
-	ui->labelBal3->setVisible(false);
+	labelBal1->setVisible(false);
+	labelBal2->setVisible(true);
+	labelBal3->setVisible(false);
 	ktoryBalon = 2;
 }
 
 void MainWindow::pokazBalon3() {
-	ui->labelBal1->setVisible(false);
-	ui->labelBal2->setVisible(false);
-	ui->labelBal3->setVisible(true);
+	labelBal1->setVisible(false);
+	labelBal2->setVisible(false);
+	labelBal3->setVisible(true);
 	ktoryBalon = 0;
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
+void MainWindow::on_pushButton_2_clicked() {
 	muzykaGlowneTheme->setSource (QUrl::fromLocalFile (themes[aktualnyTheme]));
 	muzykaGlowneTheme->play ();
 	aktualnyTheme++;
 	if  (aktualnyTheme==3) {
 		aktualnyTheme=0;
 	}
+}
+
+void MainWindow::yy()
+{
+	timerBalonowy->stop ();
+	visibilityBallonButtons (false);
+	timerGornegoLotu->start (60);
 }
 
 void MainWindow::ActivateGame(){
@@ -477,12 +588,18 @@ void MainWindow::ActivateGame(){
 
 void MainWindow::Fajerwerki() {
 	RozszerzLabelAuto ();
-	movieVictory->setFileName ("://zas/fireworks.gif");
 	ui->pushButtonStart->hide ();
 	ui->labelAuto->setMovie(movieVictory);
 	ui->labelAuto->show ();
 	movieVictory->start ();
-	QTimer::singleShot(1900, this, SLOT(koniecfajerwerka()));
+}
+
+
+void MainWindow::koniecfajerwerka2() {
+	movieVictory->stop ();
+	ZmniejszLabelAuto ();
+	ui->labelBabcia->hide ();ui->cat->hide ();
+	ActivateGame ();
 }
 
 void MainWindow::koniecfajerwerka() {
@@ -491,37 +608,251 @@ void MainWindow::koniecfajerwerka() {
 	ActivateGame ();
 }
 
-void MainWindow::ruchKota() {
-	ui->layout_->setStretch(0, ui->layout_->stretch(0) + 1);
-	ui->layout_->setStretch(1, ui->layout_->stretch(1) - 1);
-	if(ui->layout_->stretch(0) == 88){
-		// kacper
-		ui->pushButtonStart->setGeometry (0, 0 , 1361, 768);
-		ui->pushButtonStart->setIcon (QIcon("://zas/2.png"));
-		ui->pushButtonStart->show ();
-		ui->pushButtonStart->setStyleSheet ("QPushButton{background: transparent;}");
-		timerKacprowy->start (40);
-		timerKot->stop();
-		ui->cat->hide ();
+void MainWindow::koniecfajerwerkaK() {
+	visibilityBallonButtons (true);
+	movieVictory->stop ();
+	ZmniejszLabelAuto ();
+	ActivateGame ();
+}
+
+void MainWindow::koniecEfektuZamazywaniaEkranu() {
+	movieVictory->stop ();
+	timerVictory->stop ();
+	ui->labelWin->hide ();
+	wlaczBujanieBalonem ();
+	ZmniejszLabelAuto ();
+	victoryTimcounter = 0;
+	ui->as->setGeometry (0,0, 1,1);
+	ui->as->hide ();
+	ui->labelAuto->setVisible (true);
+	visibleFrameLetterButtonsLetter (true);
+	foreach (QLabel*l, labelyWAucie) {
+		l->setVisible (true);
+		l->clear ();
 	}
-	//	if(ui->layout_->stretch(0) == 130){
-	//		movieVictory->stop ();
-	//		ui->labelBabcia->hide ();
+	odkryjNaNowoPrzyciskiZPoszukiwanych();
+	ustawNastepneAuto ();
+}
+
+void MainWindow::ruchDolny() {
+	if (terazKot) {
+		if(!czybylKacper) {
+			// kot
+			ui->layout_->setStretch(0, ui->layout_->stretch(0) + 1);
+			ui->layout_->setStretch(1, ui->layout_->stretch(1) - 1);
+			if(ui->layout_->stretch(0) == 88){
+				// kacper
+				ui->pushButtonStart->setGeometry (0, 0 , 1361, 768);
+				ui->pushButtonStart->setIcon (QIcon("://zas/2.png"));
+				ui->pushButtonStart->show ();
+				ui->pushButtonStart->setStyleSheet ("QPushButton{background: transparent;}");
+				timerKacprowy->start (40);
+				timerDolnyRuch->stop();
+				ui->cat->hide ();
+				terazKot = false;
+				ui->layout_->setStretch (0,0);
+				ui->layout_->setStretch (1,70);
+				ui->cat->setPixmap (QPixmap("://zas/4.png"));
+				ui->cat->setScaledContents (false);
+				czybylKacper = true;
+				foreach (QPushButton*b, przyciski) {
+					b->setEnabled (true);
+				}
+			}
+		} else {
+				// kot finał KOTKA
+				ui->layout_->setStretch(0, ui->layout_->stretch(0) + 1);
+				ui->layout_->setStretch(1, ui->layout_->stretch(1) - 1);
+				if(ui->layout_->stretch(0) == 2) {
+					timerBalonowy->stop ();
+					movieVictory->setFileName ("://zas/giphy2.gif");
+					RozszerzLabelAuto ();
+					ui->labelAuto->setMovie (movieVictory);
+					ui->labelAuto->show ();
+					movieVictory->start ();
+					visibleFrameLetterButtonsLetter(false);
+					visibilityBallonButtons (false);
+					ui->labelBabcia->setMovie(movieVictory2);
+					movieVictory2->start ();
+					ui->label1->setPixmap (QPixmap());
+					ui->label2->setPixmap (QPixmap());
+					ui->label3->setPixmap (QPixmap());
+					ui->label4->setPixmap (QPixmap());
+					QTimer::singleShot(8500, this, SLOT(final()));
+				}
+				if(ui->layout_->stretch(0) == 118) {
+					timerDolnyRuch->stop();
+					movieVictory->stop ();
+					movieVictory->setFileName ("://zas/kromki.gif");
+					movieVictory->start ();
+					ui->labelAuto->setMovie (movieVictory);
+
+					QTimer::singleShot(3000, this, SLOT(koniecfajerwerka2()));
+					wlaczBujanieBalonem ();
+				}
+		}
+	} else {
+			// hamster
+		visibilityLiteryWAucie(false);
+			ui->layout_->setStretch(0, ui->layout_->stretch(0) + 1);
+			ui->layout_->setStretch(1, ui->layout_->stretch(1) - 1);
+			if(ui->layout_->stretch(0) == 4 ) {
+				visibleFrameLetterButtonsLetter(false);
+				RozszerzLabelAuto ();
+				ui->labelAuto->setMovie (movieVictory);
+				movieVictory->setFileName ("://zas/win.gif");
+				movieVictory->start ();
+				ui->labelAuto->show ();
+				timerBalonowy->stop ();
+				visibilityBallonButtons (false);
+				QTimer::singleShot(6270, this, SLOT(koniecfajerwerka()));
+			}
+			if(ui->layout_->stretch(0) == 30) {
+				ui->cat->show ();
+			}
+			if(ui->layout_->stretch(0) == 108) {
+				ui->layout_->setStretch (0,0);
+				ui->layout_->setStretch (1,100);
+				terazKot = true;
+				ui->cat->setPixmap (QPixmap("://zas/cat.ico"));
+				timerDolnyRuch->stop();
+				visibilityLiteryWAucie(true);
+				ui->label1->setPixmap (QPixmap());
+				ui->label2->setPixmap (QPixmap());
+				ui->label3->setPixmap (QPixmap());
+				ui->label4->setPixmap (QPixmap());
+				wlaczBujanieBalonem ();
+			}
+	}
 }
 
 void MainWindow::ruchGornyLot() {
 	ui->label_2->show ();
-	ui->layout->setStretch(0, ui->layout->stretch(0) + 1);
-	ui->layout->setStretch(1, ui->layout->stretch(1) - 1);
-	if(ui->layout->stretch(0) == 120){
-		  timerGornegoLotu->stop();
-		  ui->label_2->hide ();
+	switch (aktualnyPodpowiadacz) {
+	case BALOON: {
+		ui->layout->setStretch(0, ui->layout->stretch(0) + 2);
+		ui->layout->setStretch(1,ui->layout->stretch(1) - 2);
+		if(ui->layout->stretch(0) == 48){
+			labelyWAucie[3]->setPixmap (ikony[literyMarki.at (3)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 68) {
+			labelyWAucie[2]->setPixmap (ikony[literyMarki.at (2)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 88) {
+			labelyWAucie[1]->setPixmap (ikony[literyMarki.at (1)].pixmap (QSize(132, 132)));
+		}
+		else if (ui->layout->stretch (0) == 98) {
+			labelyWAucie[0]->setPixmap (ikony[literyMarki.at (0)].pixmap (QSize(132, 132)));
+		} else if(ui->layout->stretch(0) == 146){
+			ui->label_2->hide ();
+			ustawZdjecieVictoryLubBalonLeci(true, false);
+			visibleFrameLetterButtonsLetter(false);
+			QSound::play (waveWin[kliknietoWin]);
+			kliknietoWin++;
+			if(kliknietoWin == 3) {
+				kliknietoWin = 0;
+			}
+			trafionychLiter = 0;
+				  timerGornegoLotu->stop();
+				  aktualnyPodpowiadacz = BAT;
+				  ui->layout->setStretch (0,0);
+				  ui->layout->setStretch (1,70);
+				  ui->label_2->setMovie (movieBat);
+				czyscLitereL ();
+				movieBat->start ();
+			}
+	}
+		break;
+	case BAT: {
+		ui->layout->setStretch(0, ui->layout->stretch(0) + 1);
+		ui->layout->setStretch(1, ui->layout->stretch(1) - 1);
+		if(ui->layout->stretch(0) == 38){
+			labelyWAucie[3]->setPixmap (ikony[literyMarki.at (3)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 51) {
+			labelyWAucie[2]->setPixmap (ikony[literyMarki.at (2)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 62) {
+			labelyWAucie[1]->setPixmap (ikony[literyMarki.at (1)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 76) {
+			labelyWAucie[0]->setPixmap (ikony[literyMarki.at (0)].pixmap (QSize(132, 132)));
+		}else if(ui->layout->stretch(0) == 98) {
+			ui->label_2->hide ();
+			ui->as->setGeometry (0, 0 , 1361, 768);
+			ui->as->setMovie(movieBatDuzo);
+			ui->as->show ();
+			movieBatDuzo->start ();
+			QTimer::singleShot (2400, this, SLOT(koniecBatD()));
+		}
+	}
+		break;
+	case HELI:
+	{
+		visibilityBallonButtons (false);
+		QSound::play ("://wave/heli.wav");
+		timerBalonowy->stop ();
+		ui->layout->setStretch(0, ui->layout->stretch(0) + 1);
+		ui->layout->setStretch(1, ui->layout->stretch(1) - 1);
+		if(ui->layout->stretch(0) == 38){
+			labelyWAucie[3]->setPixmap (ikony[literyMarki.at (3)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 51) {
+			labelyWAucie[2]->setPixmap (ikony[literyMarki.at (2)].pixmap (QSize(132, 132)));
+		} else if (ui->layout->stretch (0) == 62) {
+			labelyWAucie[1]->setPixmap (ikony[literyMarki.at (1)].pixmap (QSize(132, 132)));
+
+		} else if (ui->layout->stretch (0) == 76) {
+			labelyWAucie[0]->setPixmap (ikony[literyMarki.at (0)].pixmap (QSize(132, 132)));
+		}else if(ui->layout->stretch(0) == 98) {
+			ui->label_2->hide ();
+			ustawZdjecieVictoryLubBalonLeci (true, false);
+			visibleFrameLetterButtonsLetter(false);
+			QSound::play (waveWin[kliknietoWin]);
+			kliknietoWin++;
+			if(kliknietoWin == 3) {
+				kliknietoWin = 0;
+			}
+			trafionychLiter = 0;
+			timerGornegoLotu->stop();
+			aktualnyPodpowiadacz = NO;
+			movieHeli->stop ();
+			finall =true;
+			czyscLitereL ();
+		}
+	}
+		break;
+	case NO:
+		ui->label_2->hide ();
+		break;
+	}
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *aEvent) {
+	if(aEvent->key() == Qt::Key_Escape) {
+		if(QMessageBox::question(this, tr("Literki"),
+			tr("Czy chcesz opuścić aplikację?"),
+				QMessageBox::Yes |QMessageBox::No) == QMessageBox::Yes) {
+			exit (1);
+		}
+	}
+}
+
+void MainWindow::visibilityLiteryWAucie(bool v)
+{
+	foreach (QLabel*l, labelyWAucie) {
+		l->setVisible (v);
+	}
+}
+
+void MainWindow::czyscLitereL() {
+	foreach (QPushButton *but, przyciski) {
+		if(but->toolTip ()== "L") {
+			if(but->toolTip () == "L") {
+				but->setIcon (QIcon());
+				but->setToolTip ("");
+				butL = 0;
+			}
+		}
 	}
 }
 
 void MainWindow::przyblizenieKacpra() {
 	przybKacper +=15;
-	qDebug() << przybKacper;
 	ui->pushButtonStart->setIconSize (QSize(przybKacper, przybKacper));
 	if (przybKacper > 900) {
 		if (przybKacper%10) {
@@ -530,46 +861,29 @@ void MainWindow::przyblizenieKacpra() {
 		ui->pushButtonStart->setVisible(!ui->pushButtonStart->isVisible ());
 		if (licznikKacprowy == 25) {
 			timerKacprowy->stop ();
+			movieVictory->setFileName ("://zas/fireworks.gif");
 			Fajerwerki();
+			QTimer::singleShot(1900, this, SLOT(koniecfajerwerkaK()));
 		}
 	}
 }
 
-void MainWindow::on_pushButton_3_clicked() {
-	movieVictory->setFileName ("://zas/kotka.gif");//://zas/babcia.gif
-	ui->labelAuto->hide ();
-	ui->labelBabcia->setMovie(movieVictory);
-	movieVictory->start ();
-	timerKot->start (70);
-	ui->pushButtonStart->show ();
-	//timerGornegoLotu->start (170);
-
-}
-
 void MainWindow::on_pushButtonStart_clicked() {
-	Fajerwerki ();
-//	timerKot->start (70);
+	QSound::play ("://wave/start.wav");
+	timerDolnyRuch->start (60);
 }
 
-void MainWindow::on_pushButton_4_clicked() {
-	//ui->labelAuto->setScaledContents (false);
-	//ui->labelAuto->setAlignment(Qt::AlignCenter);
-
-//	ui->labelAuto->setPixmap (QPixmap("://zas/2.png"));
-//	ui->labelAuto->setScaledContents (false);
-//	ui->labelAuto->setAlignment(Qt::AlignCenter);
-	//	ui->labelBabcia->hide ();
+void MainWindow::visibilityBallonButtons(bool a) {
+	labelBal1->setVisible (a);
+	labelBal2->setVisible (a);
+	labelBal3->setVisible (a);
 }
 
-void MainWindow::visibleBaloonAndFrameLetter(bool visible) {
-	ui->labelBal1->setVisible (visible);
-	ui->labelBal2->setVisible (visible);
-	ui->labelBal3->setVisible (visible);
+void MainWindow::visibleFrameLetterButtonsLetter(bool visible) {
 	ui->label->setVisible (visible);
 	ui->pushButton_2->setVisible (visible);
 	foreach (QPushButton*b, przyciski) {
 		b->setVisible (visible);
-
 	}
 }
 

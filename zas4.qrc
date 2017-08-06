@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>wave/heli.wav</file>
+        <file>zas/spider.gif</file>
+    </qresource>
+</RCC>

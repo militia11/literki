@@ -22,47 +22,65 @@ enum tryb {
 	OPEL
 };
 
+ enum podpowiadacz {
+	 NO,
+	 BALOON,
+	 BAT,
+	 HELI,
+ };
+
 class MainWindow : public QMainWindow{
 		Q_OBJECT
-
 	public:
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 
 	private slots:
+		void koniecZolwia();
+		void final();
+		void batWprzyciskachMovie(int x);
+		void heliWprzyciskachMovie(int x);
 		void on_pushButtonStart_clicked();
 		void sprawdzLitereNaPrzycisku();
 
-		void ruchKota();
+		void ruchDolny();
 		void ruchGornyLot();
 		void przyblizenieKacpra();
 		void koniecfajerwerka();
+		void koniecfajerwerkaK();
+		void koniecfajerwerka2();
+		void koniecEfektuZamazywaniaEkranu();
 
 		void setButtonIcon(int a);
 		void checksound();
 		void victory();
 		void bujajBalonem();
-
-		void on_labelBal3_clicked();
-		void on_labelBal1_clicked();
-		void on_labelBal2_clicked();
+		void koniecBatD();
 
 		void on_pushButton_2_clicked();
-		void on_pushButton_3_clicked();
+		void yy();
 
-		void on_pushButton_4_clicked();
+	public:
+		void keyPressEvent(QKeyEvent *aEvent);
 
 	private:
-		void visibleBaloonAndFrameLetter(bool visible);
+		void visibilityLiteryWAucie(bool v);
+		QPushButton*bal3;
+		void czyscLitereL();
+		void ustawLiteryWPrzyciskach();
+
+		void visibilityBallonButtons(bool a);
+		void visibleFrameLetterButtonsLetter(bool visible);
 		void inicjalizujIkonyLabely();
 		void ustawNastepneAuto();
-		void ustawLiteryWPrzyciskach();
 		int pobierzIdNastepnegoAuta();
 		void przywrocAuta();
 		void ActivateGame();
+
 		void Fajerwerki();
 		void odkryjNaNowoPrzyciskiZPoszukiwanych();
 		void uzupelnijPrzyciskiLiterami();
+
 		void przeniesLitereDoZdjAuta(QPushButton *but);
 		void aktualizujAktywnaLitere();
 
@@ -79,7 +97,6 @@ class MainWindow : public QMainWindow{
 		int wylosuj(int zIlu);
 		void wylosuj4Liczby();
 
-
 		void resizeEvent(QResizeEvent *evt);
 
 		void wlaczBujanieBalonem();
@@ -88,10 +105,20 @@ class MainWindow : public QMainWindow{
 		void pokazBalon3();
 
 		Ui::MainWindow *ui;
+		QPushButton *labelBal1;
+		QPushButton *labelBal2;
+		QPushButton *labelBal3;
+		QPushButton *butL;
+		bool winMonkeyNeeded;
+		bool finall;
+		bool terazKot;
+		bool czybylKacper;
 		int victoryTimcounter;
 		int ktoryBalon;
 		int trafionychLiter;
 		tryb aktualnyTryb;
+		podpowiadacz aktualnyPodpowiadacz;
+
 		int kliknietoDobrze;
 		int kliknietoWin;
 		int kliknietoZle;
@@ -103,7 +130,7 @@ class MainWindow : public QMainWindow{
 		QList<QString>waveOk;
 		QList<QString>waveWrong;
 		QList<QString>waveWin;
-		void ustawZdjecieVictoryLubBalonLeci();
+		void ustawZdjecieVictoryLubBalonLeci(bool zLotow, bool play);
 		QList<QString> literyMarki;
 		QList<QLabel *> labelyWAucie;
 		QHash<tryb, QString> slownikTrybow;
@@ -117,9 +144,13 @@ class MainWindow : public QMainWindow{
 
 		QMovie *movieL;
 		QMovie *movieVictory;
+		QMovie *movieVictory2;
+		QMovie *movieBat;
+		QMovie *movieHeli;
+		QMovie *movieBatDuzo;
 
 		QSoundEffect *muzykaGlowneTheme;
-		QTimer *timerKot;
+		QTimer *timerDolnyRuch;
 		QTimer *timerGornegoLotu;
 		QTimer *timerThemeSound;
 		QTimer *timerVictory;

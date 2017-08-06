@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>zas/babcia.gif</file>
         <file>zas/bat.gif</file>
         <file>zas/kotka.gif</file>
         <file>zas/kromki.gif</file>
@@ -9,5 +8,7 @@
         <file>zas/fireworks.gif</file>
         <file>zas/aa.gif</file>
         <file>zas/giphy2.gif</file>
+        <file>wave/theme3.wav</file>
+        <file>wave/start.wav</file>
     </qresource>
 </RCC>

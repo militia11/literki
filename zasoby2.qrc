@@ -8,7 +8,5 @@
         <file>wave/win0.wav</file>
         <file>wave/theme1.wav</file>
         <file>zas/batDuzo.gif</file>
-        <file>zas/x.gif</file>
-        <file>zas/serca.gif</file>
     </qresource>
 </RCC>
