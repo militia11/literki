@@ -36,6 +36,8 @@ class MainWindow : public QMainWindow{
 		~MainWindow();
 
 	private slots:
+		void przyblizenia();
+		void a();
 		void koniecZolwia();
 		void final();
 		void batWprzyciskachMovie(int x);
@@ -97,6 +99,7 @@ class MainWindow : public QMainWindow{
 		int wylosuj(int zIlu);
 		void wylosuj4Liczby();
 
+
 		void resizeEvent(QResizeEvent *evt);
 
 		void wlaczBujanieBalonem();
@@ -105,6 +108,8 @@ class MainWindow : public QMainWindow{
 		void pokazBalon3();
 
 		Ui::MainWindow *ui;
+		int sumaX;
+		int sumaY;
 		QPushButton *labelBal1;
 		QPushButton *labelBal2;
 		QPushButton *labelBal3;
@@ -156,6 +161,7 @@ class MainWindow : public QMainWindow{
 		QTimer *timerVictory;
 		QTimer *timerBalonowy;
 		QTimer *timerKacprowy;
+		QTimer *timerPrzyblizenieAuta;
 };
 
 #endif // MAINWINDOW_H
